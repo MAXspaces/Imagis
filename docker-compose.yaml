@@ -1,0 +1,23 @@
+﻿services:
+  mysql-imagis:
+    container_name: mysql-imagis
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: imagist2024_root
+      MYSQL_DATABASE: imagis
+      MYSQL_USER: imagis
+      MYSQL_PASSWORD: imagist2024
+  
+    ports:
+      - 13306:3306
+
+  minio-imagis:
+    container_name: minio-imagis
+    image: minio/minio
+    environment:
+      MINIO_ROOT_USER: imagis_dotnet
+      MINIO_ROOT_PASSWORD: 2024dotnet@imagis
+    command: server --console-address ":9001" /data
+    ports:
+      - 19000:9000
+      - 19001:9001

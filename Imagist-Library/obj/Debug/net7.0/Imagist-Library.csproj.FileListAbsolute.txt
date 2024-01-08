@@ -1,0 +1,12 @@
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\bin\Debug\net7.0\Imagist-Library.deps.json
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\bin\Debug\net7.0\Imagist-Library.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\bin\Debug\net7.0\Imagist-Library.pdb
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.AssemblyInfoInputs.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.AssemblyInfo.cs
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.csproj.CoreCompileInputs.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\refint\Imagist-Library.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.pdb
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\ref\Imagist-Library.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Library\obj\Debug\net7.0\Imagist-Library.csproj.AssemblyReference.cache

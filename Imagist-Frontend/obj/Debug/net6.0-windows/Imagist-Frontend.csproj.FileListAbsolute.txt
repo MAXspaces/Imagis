@@ -1,0 +1,16 @@
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\bin\Debug\net6.0-windows\Imagist-Frontend.exe
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\bin\Debug\net6.0-windows\Imagist-Frontend.deps.json
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\bin\Debug\net6.0-windows\Imagist-Frontend.runtimeconfig.json
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\bin\Debug\net6.0-windows\Imagist-Frontend.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\bin\Debug\net6.0-windows\Imagist-Frontend.pdb
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist_Frontend.Form1.resources
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.csproj.GenerateResource.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.AssemblyInfoInputs.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.AssemblyInfo.cs
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.csproj.CoreCompileInputs.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\refint\Imagist-Frontend.dll
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.pdb
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\Imagist-Frontend.genruntimeconfig.cache
+C:\Users\27040\Documents\Coding Files\C#\Imagis\Imagis\Imagist-Frontend\obj\Debug\net6.0-windows\ref\Imagist-Frontend.dll

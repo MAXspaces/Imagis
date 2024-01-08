@@ -1,0 +1,3 @@
+﻿namespace Imagist_Library
+{
+}
