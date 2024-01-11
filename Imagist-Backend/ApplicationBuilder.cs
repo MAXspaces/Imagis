@@ -107,6 +107,7 @@ public static class ApplicationBuilder
   {
     builder.Services.AddScoped<DataContext>();
     builder.Services.AddScoped<IAccountService, AccountService>();
+    builder.Services.AddScoped<IObjectStorageService, ObjectStorageService>();
     builder.Services.AddScoped<IAlbumService, AlbumService>();
     builder.Services.AddScoped<IPhotoService, PhotoService>();
   }

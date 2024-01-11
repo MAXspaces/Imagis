@@ -1,5 +1,6 @@
 using ImageMagick;
 using Imagist_Backend.Data;
+using Imagist_Backend.Service.Interface;
 using Imagist_Library.Apis.UserApi;
 using Imagist_Library.Apis;
 using Imagist_Library.Apis.UserApi.Login;
@@ -21,6 +22,7 @@ public class AccountService:IAccountService
     private readonly JwtHelper _jwtHelper;
     private readonly DataContext _dataContext;
     private readonly IMinioClient _minioClient;
+    private readonly IObjectStorageService _objectStorageService;
     private readonly string _objectServerEndpoint;
     private readonly string _imageBucket;
 
@@ -63,16 +65,6 @@ public class AccountService:IAccountService
         return Api<LoginResponse>.Success(response, "登录成功");
     }
 
-    public AccountService(IdWorker idWorker,JwtHelper jwtHelper,DataContext dataContext,IMinioClient minioClient,IConfiguration configuration)
-    {
-        _idWorker = idWorker;
-        _jwtHelper = jwtHelper;
-        _dataContext = dataContext;
-        _minioClient = minioClient;
-        _objectServerEndpoint = configuration.GetSection("APP:MinIO:Url").Value!;
-        _imageBucket = configuration.GetSection("APP:MinIO:Bucket:Image").Value!;
-    }
-
     private async void uploadUserProfile(IFormFile file,string profileId)
     {
         using (MagickImage image = new MagickImage(file.OpenReadStream()))
@@ -85,25 +77,30 @@ public class AccountService:IAccountService
             // 现在你可以使用 tempFilePath 进行上传操作
         }
         //上传文件
-        var beArgs = new BucketExistsArgs()
-            .WithBucket("imagis-image");
-        var found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-        if (!found)
+        using (Stream stream = new FileInfo("./" + profileId).OpenRead())
         {
-            var mbArgs = new MakeBucketArgs()
-                .WithBucket("imagis-image");
-            await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
+            _objectStorageService.UploadObject(_imageBucket,profileId,stream);
         }
+        //删除临时文件
+        new FileInfo("./" + profileId).Delete();
         
-        using (var stream = new FileInfo("./" + profileId).OpenRead())
-        {
-            var putCompresObjectArgs = new PutObjectArgs()
-                .WithBucket("imagis-image")
-                .WithObject(profileId)
-                .WithStreamData(stream)
-                .WithObjectSize(-1L);
-            await _minioClient.PutObjectAsync(putCompresObjectArgs);
-        }
-        //new FileInfo("./"+profileId).Delete();
     }
+    
+    public AccountService(
+        IdWorker idWorker,
+        JwtHelper jwtHelper,
+        DataContext dataContext,
+        IMinioClient minioClient,
+        IConfiguration configuration, 
+        IObjectStorageService objectStorageService)
+    {
+        _idWorker = idWorker;
+        _jwtHelper = jwtHelper;
+        _dataContext = dataContext;
+        _minioClient = minioClient;
+        _objectStorageService = objectStorageService;
+        _objectServerEndpoint = configuration.GetSection("APP:MinIO:Url").Value!;
+        _imageBucket = configuration.GetSection("APP:MinIO:Bucket:Image").Value!;
+    }
+    
 }
