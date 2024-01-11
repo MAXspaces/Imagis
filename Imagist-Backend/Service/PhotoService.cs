@@ -24,8 +24,12 @@ public class PhotoService : IPhotoService
     private readonly IMinioClient _minioClient;
     private readonly IdWorker _idWorker;
     private readonly DataContext _dataContext;
+    private readonly IObjectStorageService _objectStorageService;
     private readonly string _objectServerEndpoint;
+    //Image bucket
     private readonly string _imageBucket;
+    
+    
 
     public void ConvertStream(Stream inputStream, out Stream outputStream)
     {
@@ -37,28 +41,11 @@ public class PhotoService : IPhotoService
     {
         //解析照片的EXIF信息
         var metaData = PhotoExtractor.ExtractPhotoMetaData(file);
-        //对象服务器上传文件
-        //检查文件桶
-        var beArgs = new BucketExistsArgs()
-            .WithBucket("imagis-image");
-        var found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-        if (!found)
-        {
-            var mbArgs = new MakeBucketArgs()
-                .WithBucket("imagis-image");
-            await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-        }
+        
+        //上传原图
         var photoUUid = Guid.NewGuid();
         var objectId = $"IM-{photoUUid}.{metaData.FileExtensionName}";
-        //上传文件
-        var putObjectArgs = new PutObjectArgs()
-            .WithBucket("imagis-image")
-            .WithObject(objectId)
-            .WithStreamData(file.OpenReadStream())
-            .WithContentType(metaData.MIMEType)
-            .WithObjectSize(-1L);
-        
-        await _minioClient.PutObjectAsync(putObjectArgs);
+        _objectStorageService.UploadObject(_imageBucket,objectId,file.OpenReadStream());
         
         //同时生成压缩版本的照片
         var compressedObjectId = $"small-IM-{photoUUid}.jpg";
@@ -73,14 +60,9 @@ public class PhotoService : IPhotoService
         }
         //上传文件
         using (var stream = new FileInfo("./" + compressedObjectId).OpenRead())
-        {
-            var putCompresObjectArgs = new PutObjectArgs()
-                .WithBucket("imagis-image")
-                .WithObject(compressedObjectId)
-                .WithStreamData(stream)
-                .WithContentType(metaData.MIMEType)
-                .WithObjectSize(-1L);
-            await _minioClient.PutObjectAsync(putCompresObjectArgs);
+        { 
+            //上传需要使用await 避免在上传前或上传时输入流被自动关闭
+            await _objectStorageService.UploadObject(_imageBucket,compressedObjectId,stream);
         }
         new FileInfo("./"+compressedObjectId).Delete();
         var newPhoto = new Photo()
@@ -151,8 +133,8 @@ public class PhotoService : IPhotoService
                 PhotoId = p.PhotoId,
                 AlbumId = p.AlbumId,
                 MetaData = p.MetaData,
-                Url = $"http://{_objectServerEndpoint}/{_imageBucket}/{p.ObjectId}",
-                ThumbnailObjectUrl = $"http://{_objectServerEndpoint}/{_imageBucket}/{p.ThumbnailObjectId}"
+                Url =_objectStorageService.GetObjectUrl(p.ObjectId,_imageBucket).Result,// $"http://{_objectServerEndpoint}/{_imageBucket}/{p.ObjectId}",
+                ThumbnailObjectUrl = _objectStorageService.GetObjectUrl(p.ThumbnailObjectId,_imageBucket).Result,//$"http://{_objectServerEndpoint}/{_imageBucket}/{p.ThumbnailObjectId}"
             })
             .ToList();
         return Api<List<PhotoDto>>.Success(photos);
@@ -175,12 +157,18 @@ public class PhotoService : IPhotoService
         return Api<List<PhotoDto>>.Success(photos);
     }
 
-    public PhotoService(ILogger<PhotoService> logger,IMinioClient minioClient,IdWorker idWorker,DataContext dataContext,IConfiguration configuration)
+    public PhotoService(ILogger<PhotoService> logger,
+        IMinioClient minioClient,
+        IdWorker idWorker,
+        DataContext dataContext,
+        IConfiguration configuration,
+        IObjectStorageService objectStorageService)
     {
         _logger = logger;
         _minioClient = minioClient;
         _idWorker = idWorker;
         _dataContext = dataContext;
+        _objectStorageService = objectStorageService;
         _objectServerEndpoint = configuration.GetSection("APP:MinIO:Url").Value!;
         _imageBucket = configuration.GetSection("APP:MinIO:Bucket:Image").Value!;
     }
