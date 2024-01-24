@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="obj\Debug\" />
     <Folder Include="Resources\Icon\FontAwesome\" />
   </ItemGroup>
 
