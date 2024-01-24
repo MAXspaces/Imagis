@@ -55,7 +55,7 @@ public class ObjectStorageService : IObjectStorageService
         return result;
     }
 
-    public async void DeleteObject(string objectName, string bucketName)
+    public async Task DeleteObject(string objectName, string bucketName)
     {
         var removeArgs = new RemoveObjectArgs()
             .WithBucket(bucketName)
