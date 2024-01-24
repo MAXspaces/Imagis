@@ -1,0 +1,10 @@
+# c# ignore
+#User-specific files
+*.suo
+*.user
+*.sln.docstatus
+#Build results
+bin/
+[Dd]ebug/
+[Rr]elease/
+x64/
